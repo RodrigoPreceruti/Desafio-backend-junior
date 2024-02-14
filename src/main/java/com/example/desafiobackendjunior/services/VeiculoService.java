@@ -39,6 +39,6 @@ public class VeiculoService {
             throw new EntityNotFoundException();
         }
 
-        return this.veiculoRepository.findById(id);
+        return veiculo;
     }
 }
