@@ -19,7 +19,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity entidadeNaoEncontrada() {
-        ExceptionDTO exceptionDTO = new ExceptionDTO("Veículo não encontrado", HttpStatus.BAD_GATEWAY.value());
+        ExceptionDTO exceptionDTO = new ExceptionDTO("Veículo não encontrado", HttpStatus.NOT_FOUND.value());
 
         return ResponseEntity.badRequest().body(exceptionDTO);
     }
