@@ -4,9 +4,13 @@ import com.example.desafiobackendjunior.dtos.VeiculoApiDTO;
 import com.example.desafiobackendjunior.dtos.VeiculoDTO;
 import com.example.desafiobackendjunior.models.Veiculo;
 import com.example.desafiobackendjunior.repositories.VeiculoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VeiculoService {
@@ -22,5 +26,19 @@ public class VeiculoService {
         this.veiculoRepository.save(veiculo);
 
         return veiculo;
+    }
+
+    public List<Veiculo> listarVeiculos() {
+        return this.veiculoRepository.findAll();
+    }
+
+    public Optional<Veiculo> listarVeiculo(Long id) throws EntityNotFoundException {
+        Optional<Veiculo> veiculo = this.veiculoRepository.findById(id);
+
+        if (veiculo.isEmpty()) {
+            throw new EntityNotFoundException();
+        }
+
+        return this.veiculoRepository.findById(id);
     }
 }

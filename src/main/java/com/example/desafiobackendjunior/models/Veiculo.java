@@ -22,7 +22,7 @@ public class Veiculo {
     private String proprietario;
 
     @Column(unique = true)
-    private String cpfProprietario;
+    private String cpf;
 
     @Column(unique = true)
     private String placa;
@@ -33,15 +33,15 @@ public class Veiculo {
 
     private String modelo;
 
-    private boolean status;
+    private boolean licenciado;
 
     public Veiculo(VeiculoDTO veiculoDTO, VeiculoApiDTO veiculoApiDTO) {
         this.proprietario = veiculoDTO.proprietario();
-        this.cpfProprietario = veiculoDTO.cpf();
+        this.cpf = veiculoDTO.cpf();
         this.placa = veiculoDTO.placa();
         this.chassi = veiculoApiDTO.chassi();
         this.marca = veiculoApiDTO.marca();
         this.modelo = veiculoApiDTO.modelo();
-        this.status = veiculoApiDTO.licenciado();
+        this.licenciado = veiculoApiDTO.licenciado();
     }
 }
