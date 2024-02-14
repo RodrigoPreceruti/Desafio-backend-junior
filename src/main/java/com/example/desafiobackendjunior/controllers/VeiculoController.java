@@ -31,7 +31,7 @@ public class VeiculoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Veiculo>> listarVeiculo(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(this.veiculoService.listarVeiculo(id));
+    public ResponseEntity<Optional<Veiculo>> recuperarVeiculo(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(this.veiculoService.recuperarVeiculo(id));
     }
 }

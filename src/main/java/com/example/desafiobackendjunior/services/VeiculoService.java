@@ -32,7 +32,7 @@ public class VeiculoService {
         return this.veiculoRepository.findAll();
     }
 
-    public Optional<Veiculo> listarVeiculo(Long id) throws EntityNotFoundException {
+    public Optional<Veiculo> recuperarVeiculo(Long id) throws EntityNotFoundException {
         Optional<Veiculo> veiculo = this.veiculoRepository.findById(id);
 
         if (veiculo.isEmpty()) {
