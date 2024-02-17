@@ -31,7 +31,7 @@ public class VehicleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Vehicle>> findVehicleById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<Vehicle> findVehicleById(@PathVariable(name = "id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(this.vehicleService.findVehicleById(id));
     }
 

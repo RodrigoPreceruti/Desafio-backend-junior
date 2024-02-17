@@ -32,14 +32,14 @@ public class VehicleService {
         return this.vehicleRepository.findAll();
     }
 
-    public Optional<Vehicle> findVehicleById(Long id) throws EntityNotFoundException {
+    public Vehicle findVehicleById(Long id) throws EntityNotFoundException {
         Optional<Vehicle> vehicle = this.vehicleRepository.findById(id);
 
         if (vehicle.isEmpty()) {
             throw new EntityNotFoundException();
         }
 
-        return vehicle;
+        return vehicle.get();
     }
 
     public void deleteVehicle(Long id) throws EntityNotFoundException{
