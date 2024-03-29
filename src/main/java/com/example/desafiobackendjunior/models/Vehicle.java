@@ -1,7 +1,7 @@
 package com.example.desafiobackendjunior.models;
 
-import com.example.desafiobackendjunior.dtos.VehicleApiDTO;
-import com.example.desafiobackendjunior.dtos.VehicleDTO;
+import com.example.desafiobackendjunior.dtos.VehicleCreateDTO;
+import com.example.desafiobackendjunior.providers.vehicle.dtos.VehicleApiResponse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,13 +19,12 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String owner;
-
-    @Column(unique = true)
-    private String cpf;
-
     @Column(unique = true)
     private String plate;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
 
     private String chassi;
 
@@ -35,10 +34,9 @@ public class Vehicle {
 
     private boolean licensed;
 
-    public Vehicle(VehicleDTO vehicleDTO, VehicleApiDTO vehicleApiDTO) {
-        this.owner = vehicleDTO.proprietario();
-        this.cpf = vehicleDTO.cpf();
+    public Vehicle(VehicleCreateDTO vehicleDTO, VehicleApiResponse vehicleApiDTO) {
         this.plate = vehicleDTO.placa();
+        this.owner = vehicleDTO.owner();
         this.chassi = vehicleApiDTO.chassi();
         this.brand = vehicleApiDTO.marca();
         this.model = vehicleApiDTO.modelo();

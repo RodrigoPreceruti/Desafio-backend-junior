@@ -1,28 +1,28 @@
 package com.example.desafiobackendjunior.services;
 
-import com.example.desafiobackendjunior.dtos.VehicleApiDTO;
-import com.example.desafiobackendjunior.dtos.VehicleDTO;
 import com.example.desafiobackendjunior.models.Vehicle;
+import com.example.desafiobackendjunior.providers.vehicle.VehicleApi;
+import com.example.desafiobackendjunior.dtos.VehicleCreateDTO;
+import com.example.desafiobackendjunior.providers.vehicle.dtos.VehicleApiResponse;
 import com.example.desafiobackendjunior.repositories.VehicleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    public Vehicle createVehicle(VehicleDTO veiculoDTO) {
-        RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private VehicleApi vehicleApi;
 
-        VehicleApiDTO veiculoApiDTO = restTemplate.getForEntity("https://my.api.mockaroo.com/veiculos?key=55ad1cd0&placa=" + veiculoDTO.placa(), VehicleApiDTO.class).getBody();
+    public Vehicle createVehicle(VehicleCreateDTO vehicleCreateDTO) {
+        VehicleApiResponse vehicleApiResponse = this.vehicleApi.getVehicleByPlaca(vehicleCreateDTO.placa());
 
-        Vehicle veiculo = new Vehicle(veiculoDTO, veiculoApiDTO);
+        Vehicle veiculo = new Vehicle(vehicleCreateDTO, vehicleApiResponse);
         this.vehicleRepository.save(veiculo);
 
         return veiculo;
@@ -33,22 +33,18 @@ public class VehicleService {
     }
 
     public Vehicle findVehicleById(Long id) throws EntityNotFoundException {
-        Optional<Vehicle> vehicle = this.vehicleRepository.findById(id);
+        Vehicle vehicle = this
+                .vehicleRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
 
-        if (vehicle.isEmpty()) {
-            throw new EntityNotFoundException();
-        }
-
-        return vehicle.get();
+        return vehicle;
     }
 
-    public void deleteVehicle(Long id) throws EntityNotFoundException{
-        Optional<Vehicle> vehicle = this.vehicleRepository.findById(id);
+    public void deleteVehicle(Long id) throws EntityNotFoundException {
+        Vehicle vehicle = this.vehicleRepository
+                .findById(id)
+                .orElseThrow(EntityNotFoundException::new);
 
-        if (vehicle.isEmpty()) {
-            throw new EntityNotFoundException();
-        }
-
-        this.vehicleRepository.delete(vehicle.get());
+        this.vehicleRepository.delete(vehicle);
     }
 }
