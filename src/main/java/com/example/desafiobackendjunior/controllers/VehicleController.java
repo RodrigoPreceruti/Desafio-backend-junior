@@ -36,6 +36,6 @@ public class VehicleController {
     public ResponseEntity<?> deleteVehicle(@PathVariable Long id) {
         this.vehicleService.deleteVehicle(id);
 
-        return ResponseEntity.ok("Veículo deletado com sucesso");
+        return ResponseEntity.noContent().build();
     }
 }

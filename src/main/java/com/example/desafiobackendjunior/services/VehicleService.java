@@ -33,8 +33,8 @@ public class VehicleService {
     }
 
     public Vehicle findVehicleById(Long id) throws EntityNotFoundException {
-        Vehicle vehicle = this
-                .vehicleRepository.findById(id)
+        Vehicle vehicle = this.vehicleRepository
+                .findById(id)
                 .orElseThrow(EntityNotFoundException::new);
 
         return vehicle;
